@@ -1,0 +1,34 @@
+CREATE TABLE Tags (
+    TagId INT PRIMARY KEY IDENTITY(1,1),
+    TagName NVARCHAR(225)
+);
+
+CREATE TABLE UserProfile (
+    UserId BIGINT PRIMARY KEY,
+    UserGender INT,
+	UserAppId BIGINT,
+	IsSensitive BIT,
+	DisplayName NVARCHAR(225),
+	BirthDate VARCHAR(50)
+);
+
+CREATE TABLE UserTags (
+    UserTagId INT PRIMARY KEY IDENTITY(1,1),
+    TagId INT,
+    UserId BIGINT,
+    FOREIGN KEY (TagId) REFERENCES Tags(TagId) ON DELETE CASCADE,
+    FOREIGN KEY (UserId) REFERENCES UserProfile(UserId) ON DELETE CASCADE
+);
+
+CREATE TABLE Scopes (
+    ScopeId INT PRIMARY KEY IDENTITY(1,1),
+    ScopeName NVARCHAR(225)
+);
+
+CREATE TABLE ScopeTags (
+    ScopeTagId INT PRIMARY KEY IDENTITY(1,1),
+    TagId INT,
+    ScopeId INT,
+    FOREIGN KEY (TagId) REFERENCES Tags(TagId) ON DELETE CASCADE,
+    FOREIGN KEY (ScopeId) REFERENCES Scopes(ScopeId) ON DELETE CASCADE
+);
